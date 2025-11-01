@@ -1,0 +1,39 @@
+# @package _global_
+defaults:
+- _self_
+
+num_frames: 100
+num_coords: 2
+experiment:
+  name: ${model.name}_homonyms_unmerged_3_layer
+  output_dir: 
+  log_file: ${experiment.output_dir}/${experiment.name}
+  train_metrics_file: ${experiment.output_dir}/train_metrics/${experiment.name}.csv
+dataset:
+  name: homosign_holistic_lstm
+  dataset_dir:
+  label_file: ${dataset.metadata_dir}/563_sign_list.txt
+  num_frames: ${num_frames}
+  num_coords: ${num_coords}
+  padding: linear-interp
+  metadata_dir:
+  homosign_file: ${dataset.metadata_dir}/no_homosigns.json
+  augmentations: true
+  feature_subset: true
+dataloader:
+  batch_size: 1024
+  shuffle: true
+  num_workers: 32
+model:
+  name: DoubleLSTM_A
+  save_name: ${experiment.name}
+  num_features: 94
+  num_frames: ${num_frames}
+  num_coords: ${num_coords}
+  num_signs: 562
+  num_layers: 3
+training:
+  optimizer: RMS_Prop
+  learning_rate: 0.0005
+  alpha: 0.9
+  num_epochs: 50

@@ -1,0 +1,19 @@
+name: ml-pipeline
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - h5py
+  - pytorch
+  - torchvision
+  - torchaudio
+  # - pytorch-cuda=12.2
+  - pandas
+  - tqdm
+  - pip
+  - pip:
+      - torch-geometric
+      - hydra-core

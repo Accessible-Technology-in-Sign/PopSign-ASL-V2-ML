@@ -1,0 +1,15 @@
+name: pose-pipeline
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - h5py
+  - opencv
+  - flask
+  - tqdm
+  - pip
+  - pip:
+      - mediapipe
+      - p-tqdm

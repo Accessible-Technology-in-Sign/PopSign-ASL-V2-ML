@@ -1,0 +1,53 @@
+# @package _global_
+defaults:
+- _self_
+
+# Set Max Frames to something high to not truncate data, and also ignore the padding
+num_frames: 100 
+num_coords: 2
+
+
+experiment:
+  name: "paper-holistic-merged-3-${model.name}"
+  output_dir:
+  train_metrics_file: "${experiment.output_dir}/train_metrics/${experiment.name}.csv"
+  log_file: "${experiment.output_dir}/${experiment.name}"
+  seed: 22
+  
+
+hydra:
+  run:
+    dir: "${experiment.output_dir}/hydra/${experiment.name}"
+
+dataset:
+  name: homosign_holistic_lstm
+  dataset_dir:
+  metadata_dir:
+  label_file: "${dataset.metadata_dir}/563_sign_list.txt"
+  homosign_file: "${dataset.metadata_dir}/homosigns.json"
+  num_frames: ${num_frames}
+  num_coords: ${num_coords}
+  padding: "linear-interp"
+  augmentations: True
+  feature_subset: True
+
+dataloader:
+  batch_size: 1024
+  shuffle: true
+  num_workers: 32
+
+model:
+  name: DoubleLSTM_A
+  save_name: "${experiment.name}"
+  num_features: 94
+  num_frames: ${num_frames}
+  num_coords: ${num_coords}
+  num_signs: 504
+  num_layers: 3
+
+training:
+  optimizer: RMS_Prop
+  learning_rate: 0.0005
+  alpha: 0.9
+  num_epochs: 40
+
